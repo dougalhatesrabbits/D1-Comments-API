@@ -22,12 +22,14 @@ export default {
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-const app = new Hono();
+type Bindings = {
+	DB: D1Database;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 app.use("/api/*", cors());
 
 app.get("/api/posts/:slug/comments", async (c) => {
-	// Do something and return an HTTP response
-	// Optionally, do something with c.req.param("slug")
 	const { slug } = c.req.param();
 	const { results } = await c.env.DB.prepare(
 		"SELECT * FROM comments WHERE post_slug = ?",
@@ -38,10 +40,11 @@ app.get("/api/posts/:slug/comments", async (c) => {
 });
 
 app.post("/api/posts/:slug/comments", async (c) => {
-	// Do something and return an HTTP response
-	// Optionally, do something with c.req.param("slug")
 	const { slug } = c.req.param();
-	const { author, body } = await c.req.json();
+	const { author, body } = await c.req.json<{
+		author: string;
+		body: string;
+	}>();
 
 	if (!author) return c.text("Missing author value for new comment", 400);
 	if (!body) return c.text("Missing body value for new comment", 400);
