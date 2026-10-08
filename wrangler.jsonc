@@ -13,7 +13,7 @@
 	"upload_source_maps": true,
 	"d1_databases": [
 		{
-			"binding": "d1_comments_api",
+			"binding": "DB",
 			"database_name": "d1-comments-api",
 			"database_id": "0008855a-0a5d-4504-9fcd-44c02fcb79ca"
 		}
