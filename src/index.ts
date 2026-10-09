@@ -20,14 +20,14 @@ export default {
 */
 
 import { Hono } from "hono";
-import { cors } from "hono/cors";
+/*import { cors } from "hono/cors";*/
 
 type Bindings = {
 	DB: D1Database;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
-app.use("/api/*", cors());
+/*app.use("/api/*", cors());*/
 
 app.get("/api/posts/:slug/comments", async (c) => {
 	const { slug } = c.req.param();
